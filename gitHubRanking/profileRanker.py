@@ -17,7 +17,7 @@ class ProfileRanker:
 
 
 if __name__ =="__main__":
-    profiles = ["PyGithub"]
+    profiles = ["lazyprogrammer"]
     for id in profiles:
         pr = ProfileRanker(id)
-        print(pr.get_score())
+        print(id+"-->"+str(pr.get_score()))
