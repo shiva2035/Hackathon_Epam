@@ -17,7 +17,7 @@ class ProfileRanker:
 
 
 if __name__ =="__main__":
-    profiles = ["lazyprogrammer"]
+    profiles = ["nvvijayas"]
     for id in profiles:
         pr = ProfileRanker(id)
         print(id+"-->"+str(pr.get_score()))
