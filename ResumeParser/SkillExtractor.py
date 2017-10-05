@@ -3,8 +3,13 @@ import os,glob, re
 from nltk.corpus import stopwords
 
 all_resumes = []
-skill_set_universal = ['java','python', 'c','c++','swift', '.net','machine learning', 'SML', 'mysql', 'mongodb','apache']
-output = []
+skill_set_universal = []
+skills_list = open("universal_skillset.txt",'r')
+for skill in skills_list.readlines():
+    skill = skill.replace('\n', '')
+    skill_set_universal.append(skill.lower())
+
+skill_set_universal = set(skill_set_universal)
 def extract_text(directory_name):
     os.chdir(directory_name)
     for file in glob.glob("*.pdf"):
@@ -30,25 +35,28 @@ def extract_phone(resume):
 
 def extract_links(resume):
     link = re.findall(r'(https?://[^\s]+)', ' '.join(resume))
-    return link
+    return set(link)
 
 def extract_skills(resume):
     skills = []
-    for w in resume:
-        if w.lower() in skill_set_universal:
-            skills.append(w.lower())
+    for elem in enumerate(skill_set_universal):
+        if any(item.lower() == elem[1].lower() for item in resume):
+            skills.append(elem[1])
     return set(skills)
 
+output = []
 def process_resumes(directory_name):
     for resume in directory_name:
-
         email = extract_email(resume)
         skills = extract_skills(resume)
         phone = extract_phone(resume)
         links = extract_links(resume)
+        email = email.split('.com',1)[0]
+        file = open(email+".txt", "w")
+        for i in skills:
+            file.write(i + " ")
+        file.close()
         output.append({"email": email, "skills":skills, "phone": phone, "links":links})
-
-
 
 """ Processing of Resumes Starts Here..."""
 
