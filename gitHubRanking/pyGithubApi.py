@@ -4,7 +4,7 @@ from constants import *
 g = Github("gautam0707","0801nineTeeN1")
 
 
-def py_github_api_get_followers_count(profile_id, depth=2):
+def py_github_api_get_followers_count(profile_id, depth=3):
     if depth == 0:
         return g.get_user(profile_id).followers * followers_weighing_factors[0]
 
